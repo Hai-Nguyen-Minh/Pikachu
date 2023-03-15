@@ -1,3 +1,2 @@
 # Pikaychi
-game lol
-hai dbrr
+game lol con me may VietDH
