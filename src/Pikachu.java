@@ -51,14 +51,15 @@ public class Pikachu extends JFrame {
       }
     });
     JPanel panel = new JPanel();
-    panel.setLayout(new GridLayout(30, 30));
+    panel.setLayout(new GridLayout(10, 10));
     //init 100 button to click
     for (int i = 0; i < array.size(); i++) {
       JButton button;
-      button = new JButton(String.valueOf(array.get(i)));
+      button = new JButton();
       panel.add(String.valueOf(i), button);
       int finalI = i;
       button.addActionListener((actionEvent) -> {
+        button.setText(String.valueOf(array.get(finalI)));
         answers.put(finalI, button.getText());
         if (answers.size() == 2) {
           for (Map.Entry<Integer, String> answer : answers.entrySet()) {
@@ -74,9 +75,15 @@ public class Pikachu extends JFrame {
             compIndex.clear();
             answers.clear();
           }
-          answersArr.clear();
-          compIndex.clear();
-          answers.clear();
+          else {
+            JButton button1 = (JButton) panel.getComponent(compIndex.get(0));
+            JButton button2 = (JButton) panel.getComponent(compIndex.get(1));
+            button1.setText("");
+            button2.setText("");
+            answersArr.clear();
+            compIndex.clear();
+            answers.clear();
+          }
         }
       });
     }
