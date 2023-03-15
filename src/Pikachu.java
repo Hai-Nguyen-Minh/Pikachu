@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -24,6 +27,10 @@ public class Pikachu extends JFrame {
     ArrayList<Integer> compIndex = new ArrayList<>();
     AtomicInteger point = new AtomicInteger();
     Random random = new Random();
+    JLabel label = new JLabel();
+    int second = 0;
+    int minute = 0;
+    int hour = 0;
     while (set1.size() < arrayList.size()){
       Integer i = random.nextInt(arrayList.size()) + 1;
       set1.add(i);
@@ -37,6 +44,7 @@ public class Pikachu extends JFrame {
     array.addAll(set2);
     System.out.println("set2 : "+ set2);
     System.out.println(arrayList.size());
+    getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
     setTitle("Pikachu !!!");
     setSize(800, 800);
     addWindowListener(new WindowAdapter() {
@@ -46,7 +54,7 @@ public class Pikachu extends JFrame {
       }
     });
     JPanel panel = new JPanel();
-    panel.setLayout(new GridLayout(10, 10));
+    panel.setLayout(new GridLayout(4, 4));
     //init 100 button to click
     for (int i = 0; i < array.size(); i++) {
       JButton button;
@@ -65,11 +73,8 @@ public class Pikachu extends JFrame {
             panel.getComponent(compIndex.get(0)).setVisible(false);
             panel.getComponent(compIndex.get(1)).setVisible(false);
             point.getAndIncrement();
-            System.out.println("point : "+point);
-            if (point.get() == arrayList.size()) {
-              JOptionPane.showMessageDialog(panel, "You Win!!!");
-            }
-            System.out.println(panel.getComponents().length);
+            System.out.println("point : " + point);
+            win(panel, point, arrayList.size());
             answersArr.clear();
             compIndex.clear();
             answers.clear();
@@ -80,7 +85,35 @@ public class Pikachu extends JFrame {
         }
       });
     }
+    add(label);
     add(panel);
     setVisible(true);
+    try {
+      while(win(panel, point, arrayList.size())) {
+        second++;
+        if (second > 59) {
+          minute++;
+          second = 0;
+          if (minute > 59) {
+            hour++;
+            minute = 0;
+          }
+        }
+        Thread.sleep(1000);
+        label.setText("Time [ " + hour + " : " + minute + " : " + second + " ]");
+      }
+      System.out.println("stop time");
+    }
+    catch (InterruptedException exception) {
+      throw new RuntimeException();
+    }
+  }
+  private boolean win(JPanel panel, AtomicInteger point, Integer size) {
+    if (Objects.equals(point, size)) {
+      System.out.println("win");
+      JOptionPane.showMessageDialog(panel, "You Win!!!");
+      return false;
+    }
+    return true;
   }
 }
