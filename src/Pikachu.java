@@ -36,16 +36,13 @@ public class Pikachu extends JFrame {
       set1.add(i);
     }
     array.addAll(set1);
-    System.out.println("set1 : "+ set1);
     while (set2.size() < arrayList.size()){
       Integer i = random.nextInt(arrayList.size()) + 1;
       set2.add(i);
     }
     array.addAll(set2);
-    System.out.println("set2 : "+ set2);
-    System.out.println(arrayList.size());
     getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-    setTitle("Pikachu !!!");
+    setTitle("Pikaychi !!!");
     setSize(800, 800);
     addWindowListener(new WindowAdapter() {
       @Override
@@ -54,7 +51,7 @@ public class Pikachu extends JFrame {
       }
     });
     JPanel panel = new JPanel();
-    panel.setLayout(new GridLayout(4, 4));
+    panel.setLayout(new GridLayout(30, 30));
     //init 100 button to click
     for (int i = 0; i < array.size(); i++) {
       JButton button;
@@ -63,7 +60,6 @@ public class Pikachu extends JFrame {
       int finalI = i;
       button.addActionListener((actionEvent) -> {
         answers.put(finalI, button.getText());
-        System.out.println(answers);
         if (answers.size() == 2) {
           for (Map.Entry<Integer, String> answer : answers.entrySet()) {
             answersArr.add(answer.getValue());
@@ -73,8 +69,7 @@ public class Pikachu extends JFrame {
             panel.getComponent(compIndex.get(0)).setVisible(false);
             panel.getComponent(compIndex.get(1)).setVisible(false);
             point.getAndIncrement();
-            System.out.println("point : " + point);
-            win(panel, point, arrayList.size());
+            win(panel, point.intValue(), arrayList.size());
             answersArr.clear();
             compIndex.clear();
             answers.clear();
@@ -89,7 +84,7 @@ public class Pikachu extends JFrame {
     add(panel);
     setVisible(true);
     try {
-      while(win(panel, point, arrayList.size())) {
+      while(win(panel, point.intValue(), arrayList.size())) {
         second++;
         if (second > 59) {
           minute++;
@@ -102,15 +97,13 @@ public class Pikachu extends JFrame {
         Thread.sleep(1000);
         label.setText("Time [ " + hour + " : " + minute + " : " + second + " ]");
       }
-      System.out.println("stop time");
     }
     catch (InterruptedException exception) {
       throw new RuntimeException();
     }
   }
-  private boolean win(JPanel panel, AtomicInteger point, Integer size) {
+  private boolean win(JPanel panel, Integer point, Integer size) {
     if (Objects.equals(point, size)) {
-      System.out.println("win");
       JOptionPane.showMessageDialog(panel, "You Win!!!");
       return false;
     }
