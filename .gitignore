@@ -1,2 +1,4 @@
-.out/
+*/out
+*.class
 .idea/
+*.iml
