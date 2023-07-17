@@ -51,7 +51,7 @@ public class Pikachu extends JFrame {
       }
     });
     JPanel panel = new JPanel();
-    panel.setLayout(new GridLayout(10, 10));
+    panel.setLayout(new GridLayout(6, 6));
     //init 100 button to click
     for (int i = 0; i < array.size(); i++) {
       JButton button;
