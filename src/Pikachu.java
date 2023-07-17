@@ -42,8 +42,9 @@ public class Pikachu extends JFrame {
     }
     array.addAll(set2);
     getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-    setTitle("Pikaychi !!!");
+    setTitle("Pikachu !!!");
     setSize(800, 800);
+    setResizable(false);
     addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
